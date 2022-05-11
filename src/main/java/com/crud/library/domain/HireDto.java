@@ -2,15 +2,15 @@ package com.crud.library.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-
-import java.util.Date;
+import java.time.LocalDate;
 
 @Getter
 @AllArgsConstructor
 public class HireDto {
 
+    private Long id;
     private Copy copy;
     private User user;
-    private Date hireDate;
-    private Date returnDate;
+    private LocalDate hireDate;
+    private LocalDate returnDate;
 }

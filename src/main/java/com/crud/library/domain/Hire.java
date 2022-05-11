@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Getter
 @NoArgsConstructor
@@ -15,6 +15,11 @@ import java.util.Date;
 public class Hire {
 
     @Id
+    @NotNull
+    @GeneratedValue
+    @Column(name = "ID")
+    private Long id;
+
     @NotNull
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "COPY_ID")
@@ -27,8 +32,8 @@ public class Hire {
 
     @NotNull
     @Column(name = "HIRE_DATE")
-    private Date hireDate = new Date();
+    private LocalDate hireDate;
 
     @Column(name = "RETURN_DATE")
-    private Date returnDate = new Date();
+    private LocalDate returnDate;
 }
