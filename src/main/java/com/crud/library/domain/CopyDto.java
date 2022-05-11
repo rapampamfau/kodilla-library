@@ -1,5 +1,6 @@
 package com.crud.library.domain;
 
+import com.crud.library.controller.StatusOfCopy;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -9,5 +10,5 @@ public class CopyDto {
 
     private Long id;
     private Title titleId;
-    private String status;
+    private StatusOfCopy status;
 }
