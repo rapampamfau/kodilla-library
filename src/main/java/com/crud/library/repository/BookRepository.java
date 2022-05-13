@@ -1,14 +1,14 @@
 package com.crud.library.repository;
 
-import com.crud.library.domain.Title;
+import com.crud.library.domain.Book;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public interface TitleRepository extends CrudRepository<Title, Long> {
+public interface TitleRepository extends CrudRepository<Book, Long> {
 
     @Override
-    List<Title> findAll();
+    List<Book> findAll();
 }

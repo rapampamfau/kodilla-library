@@ -1,14 +1,14 @@
 package com.crud.library.mapper;
 
-import com.crud.library.domain.Title;
-import com.crud.library.domain.TitleDto;
+import com.crud.library.domain.Book;
+import com.crud.library.domain.BookDto;
 import org.springframework.stereotype.Service;
 
 @Service
 public class TitleMapper {
 
-    public Title mapToTitle(final TitleDto titleDto) {
-        return new Title(
+    public Book mapToTitle(final BookDto titleDto) {
+        return new Book(
                 titleDto.getId(),
                 titleDto.getTitle(),
                 titleDto.getAuthor(),
@@ -17,8 +17,8 @@ public class TitleMapper {
         );
     }
 
-    public TitleDto mapToTitleDto(final Title title) {
-        return new TitleDto(
+    public BookDto mapToTitleDto(final Book title) {
+        return new BookDto(
                 title.getId(),
                 title.getTitle(),
                 title.getAuthor(),
