@@ -1,24 +1,21 @@
 package com.crud.library.domain;
 
 import com.crud.library.controller.StatusOfCopy;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @NamedNativeQuery(
-        name = "Copy.getAvailableCopiesOfTitle",
-        query = "SELECT * FROM COPIES_OF_TITLE WHERE (TITLE_ID = :titleId AND STATUS = 'AVAILABLE'"
+        name = "Copy.getAvailableCopiesOfBook",
+        query = "SELECT * FROM COPIES WHERE (BOOK_ID = :bookId AND STATUS = 'AVAILABLE')"
 )
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "COPIES_OF_TITLE")
+@Entity(name = "COPIES")
 public class Copy {
 
     @Id
@@ -27,12 +24,10 @@ public class Copy {
     @Column(name = "ID")
     private Long id;
 
-    @NotNull
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "TITLE_ID")
-    private Title titleId;
+    @JoinColumn(name = "BOOK_ID")
+    private Book bookId;
 
-    @NotNull
     @Column(name = "STATUS")
     private StatusOfCopy status;
 }

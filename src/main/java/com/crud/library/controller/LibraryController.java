@@ -1,10 +1,11 @@
 package com.crud.library.controller;
 
 import com.crud.library.domain.*;
+import com.crud.library.exceptions.BookNotFoundException;
 import com.crud.library.exceptions.CopyNotFoundException;
 import com.crud.library.mapper.CopyMapper;
 import com.crud.library.mapper.HireMapper;
-import com.crud.library.mapper.TitleMapper;
+import com.crud.library.mapper.BookMapper;
 import com.crud.library.mapper.UserMapper;
 import com.crud.library.service.DbService;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +22,7 @@ public class LibraryController {
     private final DbService service;
     private final CopyMapper copyMapper;
     private final HireMapper hireMapper;
-    private final TitleMapper titleMapper;
+    private final BookMapper bookMapper;
     private final UserMapper userMapper;
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, value = "addUser")
@@ -31,10 +32,10 @@ public class LibraryController {
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, value = "addTitle")
-    public ResponseEntity<Void> addTitle(@RequestBody TitleDto titleDto) {
-        Title title = titleMapper.mapToTitle(titleDto);
-        service.saveTitle(title);
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, value = "addBook")
+    public ResponseEntity<Void> addBook(@RequestBody BookDto bookDto) {
+        Book book = bookMapper.mapToBook(bookDto);
+        service.saveBook(book);
         return ResponseEntity.ok().build();
     }
 
@@ -46,16 +47,18 @@ public class LibraryController {
     }
 
     @PutMapping
-    public ResponseEntity<Copy> updateStatusOfCopy(Long copyId) throws CopyNotFoundException {
-        return ResponseEntity.ok(service.changeStatus(copyId));
+    public ResponseEntity<CopyDto> updateStatusOfCopy(@RequestBody CopyDto copyDto) {
+        Copy copy = copyMapper.mapToCopy(copyDto);
+        Copy modifiedStatusCopy = service.changeStatus(copy);
+        return ResponseEntity.ok(copyMapper.mapToCopyDto(modifiedStatusCopy));
     }
 
-    @GetMapping
-    public ResponseEntity<Integer> getQuantityOfAvailableCopies(Long titleId) {
-        return ResponseEntity.ok(service.checkAmountOfCopies(titleId));
+    @GetMapping(value = "{bookId}")
+    public ResponseEntity<Integer> getQuantityOfAvailableCopies(@PathVariable Long bookId) {
+        return ResponseEntity.ok(service.checkAmountOfCopies(bookId));
     }
 
-    @PostMapping
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, value = "hireABook")
     public ResponseEntity<Void> hireABook(@RequestBody HireDto hireDto) {
         Hire hire = hireMapper.mapToHire(hireDto);
         service.saveHire(hire);

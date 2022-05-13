@@ -5,25 +5,25 @@ import com.crud.library.domain.BookDto;
 import org.springframework.stereotype.Service;
 
 @Service
-public class TitleMapper {
+public class BookMapper {
 
-    public Book mapToTitle(final BookDto titleDto) {
+    public Book mapToBook(final BookDto bookDto) {
         return new Book(
-                titleDto.getId(),
-                titleDto.getTitle(),
-                titleDto.getAuthor(),
-                titleDto.getYear(),
-                titleDto.getCopies()
+                bookDto.getId(),
+                bookDto.getTitle(),
+                bookDto.getAuthor(),
+                bookDto.getYear(),
+                bookDto.getCopies()
         );
     }
 
-    public BookDto mapToTitleDto(final Book title) {
+    public BookDto mapToBookDto(final Book book) {
         return new BookDto(
-                title.getId(),
-                title.getTitle(),
-                title.getAuthor(),
-                title.getYear(),
-                title.getCopies()
+                book.getId(),
+                book.getTitle(),
+                book.getAuthor(),
+                book.getYear(),
+                book.getCopies()
         );
     }
 }

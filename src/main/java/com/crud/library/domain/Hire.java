@@ -26,7 +26,7 @@ public class Hire {
     private Copy copy;
 
     @NotNull
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "USER_ID")
     private User user;
 

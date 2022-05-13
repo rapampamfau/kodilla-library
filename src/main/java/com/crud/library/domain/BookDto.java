@@ -7,7 +7,7 @@ import java.util.List;
 
 @Getter
 @AllArgsConstructor
-public class TitleDto {
+public class BookDto {
 
     private Long id;
     private String title;

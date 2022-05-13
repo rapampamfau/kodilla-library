@@ -12,8 +12,8 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "TITLES")
-public class Title {
+@Entity(name = "BOOKS")
+public class Book {
 
     @Id
     @NotNull
@@ -35,7 +35,7 @@ public class Title {
 
     @OneToMany(
             targetEntity = Copy.class,
-            mappedBy = "titleId",
+            mappedBy = "bookId",
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY
     )

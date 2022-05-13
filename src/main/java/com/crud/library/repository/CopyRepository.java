@@ -16,8 +16,8 @@ public interface CopyRepository extends CrudRepository<Copy, Long> {
     List<Copy> findAll();
 
     @Query
-    int getAvailableCopiesOfTitle(@Param(value = "titleId") Long titleId);
+    int getAvailableCopiesOfBook(@Param(value = "bookId") Long id);
 
     @Override
-    Optional<Copy> findById(Long id);
+    Optional<Copy> findById(Long copyId);
 }
