@@ -15,13 +15,4 @@ public class UserMapper {
                 userDto.getCreated()
         );
     }
-
-    public UserDto mapToUserDto(final User user) {
-        return new UserDto(
-                user.getId(),
-                user.getName(),
-                user.getSurname(),
-                user.getCreated()
-        );
-    }
 }

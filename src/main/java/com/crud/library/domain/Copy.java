@@ -8,7 +8,7 @@ import javax.validation.constraints.NotNull;
 
 @NamedNativeQuery(
         name = "Copy.getAvailableCopiesOfBook",
-        query = "SELECT * FROM COPIES WHERE (BOOK_ID = :bookId AND STATUS = 'AVAILABLE')"
+        query = "SELECT COUNT(*) BOOK_ID FROM COPIES WHERE (BOOK_ID = :book AND STATUS = 'AVAILABLE')"
 )
 
 @Getter
@@ -24,10 +24,10 @@ public class Copy {
     @Column(name = "ID")
     private Long id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "BOOK_ID")
-    private Book bookId;
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "BOOK_ID", referencedColumnName = "ID")
+    private Book book;
 
-    @Column(name = "STATUS")
+    @Enumerated(EnumType.STRING)
     private StatusOfCopy status;
 }

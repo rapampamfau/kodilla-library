@@ -1,8 +1,8 @@
 package com.crud.library.controller;
 
 import com.crud.library.domain.*;
-import com.crud.library.exceptions.BookNotFoundException;
 import com.crud.library.exceptions.CopyNotFoundException;
+import com.crud.library.exceptions.UserNotFoundException;
 import com.crud.library.mapper.CopyMapper;
 import com.crud.library.mapper.HireMapper;
 import com.crud.library.mapper.BookMapper;
@@ -42,25 +42,29 @@ public class LibraryController {
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, value = "addCopy")
     public ResponseEntity<Void> addCopy(@RequestBody CopyDto copyDto) {
         Copy copy = copyMapper.mapToCopy(copyDto);
+        service.addCopyToBookCopies(copy, copy.getBook());
         service.saveCopy(copy);
         return ResponseEntity.ok().build();
     }
 
     @PutMapping
-    public ResponseEntity<CopyDto> updateStatusOfCopy(@RequestBody CopyDto copyDto) {
+    public ResponseEntity<CopyDto> updateStatusOfCopy(@RequestBody CopyDto copyDto) throws CopyNotFoundException {
         Copy copy = copyMapper.mapToCopy(copyDto);
-        Copy modifiedStatusCopy = service.changeStatus(copy);
-        return ResponseEntity.ok(copyMapper.mapToCopyDto(modifiedStatusCopy));
+        Copy modifiedStatusCopy = service.changeStatus(copy.getId());
+        Copy savedCopy = service.saveCopy(modifiedStatusCopy);
+        return ResponseEntity.ok(copyMapper.mapToCopyDto(savedCopy));
     }
 
     @GetMapping(value = "{bookId}")
-    public ResponseEntity<Integer> getQuantityOfAvailableCopies(@PathVariable Long bookId) {
+    public ResponseEntity<Long> getQuantityOfAvailableCopies(@PathVariable Long bookId) {
         return ResponseEntity.ok(service.checkAmountOfCopies(bookId));
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, value = "hireABook")
-    public ResponseEntity<Void> hireABook(@RequestBody HireDto hireDto) {
+    public ResponseEntity<Void> hireABook(@RequestBody HireDto hireDto) throws CopyNotFoundException, UserNotFoundException {
         Hire hire = hireMapper.mapToHire(hireDto);
+        service.addCopyToHire(hire.getCopy());
+        service.addUserToHire(hire.getUser());
         service.saveHire(hire);
         return ResponseEntity.ok().build();
     }

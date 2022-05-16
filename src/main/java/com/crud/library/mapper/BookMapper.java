@@ -16,14 +16,4 @@ public class BookMapper {
                 bookDto.getCopies()
         );
     }
-
-    public BookDto mapToBookDto(final Book book) {
-        return new BookDto(
-                book.getId(),
-                book.getTitle(),
-                book.getAuthor(),
-                book.getYear(),
-                book.getCopies()
-        );
-    }
 }

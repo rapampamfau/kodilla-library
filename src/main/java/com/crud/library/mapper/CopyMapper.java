@@ -10,7 +10,7 @@ public class CopyMapper {
     public Copy mapToCopy(final CopyDto copyDto) {
         return new Copy(
                 copyDto.getId(),
-                copyDto.getBookId(),
+                copyDto.getBook(),
                 copyDto.getStatus()
         );
     }
@@ -18,7 +18,7 @@ public class CopyMapper {
     public CopyDto mapToCopyDto(final Copy copy) {
         return new CopyDto(
                 copy.getId(),
-                copy.getBookId(),
+                copy.getBook(),
                 copy.getStatus()
         );
     }

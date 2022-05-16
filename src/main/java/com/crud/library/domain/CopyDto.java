@@ -9,6 +9,6 @@ import lombok.Getter;
 public class CopyDto {
 
     private Long id;
-    private Book bookId;
+    private Book book;
     private StatusOfCopy status;
 }

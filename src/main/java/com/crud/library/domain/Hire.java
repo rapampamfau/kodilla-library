@@ -21,12 +21,12 @@ public class Hire {
     private Long id;
 
     @NotNull
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinColumn(name = "COPY_ID")
     private Copy copy;
 
     @NotNull
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinColumn(name = "USER_ID")
     private User user;
 

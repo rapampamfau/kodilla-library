@@ -6,14 +6,13 @@ import com.crud.library.domain.Hire;
 import com.crud.library.domain.Book;
 import com.crud.library.domain.User;
 import com.crud.library.exceptions.CopyNotFoundException;
+import com.crud.library.exceptions.UserNotFoundException;
 import com.crud.library.repository.CopyRepository;
 import com.crud.library.repository.HireRepository;
 import com.crud.library.repository.BookRepository;
 import com.crud.library.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -40,24 +39,36 @@ public class DbService {
         return hireRepository.save(hire);
     }
 
-    public int checkAmountOfCopies(final Long bookId) {
+    public void addCopyToBookCopies(final Copy copy, final Book book) {
+        book.getCopies().add(copy);
+        copy.setBook(book);
+    }
+
+    public Copy changeStatus(final Long copyId) throws CopyNotFoundException {
+        Copy copy = copyRepository.findById(copyId).orElseThrow(CopyNotFoundException::new);
+        if (copy.getStatus() == StatusOfCopy.AVAILABLE) {
+            copy.setStatus(StatusOfCopy.HIRED);
+        } else if (copy.getStatus() == StatusOfCopy.HIRED) {
+            copy.setStatus(StatusOfCopy.AVAILABLE);
+        }
+        return copy;
+    }
+
+    public Long checkAmountOfCopies(final Long bookId) {
         return copyRepository.getAvailableCopiesOfBook(bookId);
+    }
+
+    public Copy addCopyToHire(final Copy copy) throws CopyNotFoundException {
+        Copy thisCopy = copyRepository.findByIdAndStatus(copy.getId(), copy.getStatus()).orElseThrow(CopyNotFoundException::new);
+        thisCopy.setStatus(StatusOfCopy.HIRED);
+        return thisCopy;
+    }
+
+    public User addUserToHire(final User user) throws UserNotFoundException {
+        return userRepository.findById(user.getId()).orElseThrow(UserNotFoundException::new);
     }
 
     public void deleteHire(final Long hireId) {
         hireRepository.deleteById(hireId);
-    }
-
-    public Copy changeStatus(final Copy copy) {
-        if (copy.getStatus() == StatusOfCopy.AVAILABLE) {
-            copy.setStatus(StatusOfCopy.HIRED);
-        } else {
-            copy.setStatus(StatusOfCopy.AVAILABLE);
-        }
-        return copyRepository.save(copy);
-    }
-
-    public Copy getCopy(final Long copyId) throws CopyNotFoundException {
-        return copyRepository.findById(copyId).orElseThrow(CopyNotFoundException::new);
     }
 }

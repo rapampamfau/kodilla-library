@@ -16,14 +16,4 @@ public class HireMapper {
                 hireDto.getReturnDate()
         );
     }
-
-    public HireDto mapToHireDto(final Hire hire) {
-        return new HireDto(
-                hire.getId(),
-                hire.getCopy(),
-                hire.getUser(),
-                hire.getHireDate(),
-                hire.getReturnDate()
-        );
-    }
 }
